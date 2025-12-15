@@ -5,9 +5,12 @@ import pandas as pd
 import plotly.express as px
 from animal_shelter import AnimalShelter
 
+# AnimalShelter now connects to a local MySQL database instead of the
+# original MongoDB instance used in CS-340.
+
 # Initialize the app
 app = dash.Dash(__name__)
-server = app.server  
+server = app.server
 shelter = AnimalShelter()
 
 # Layout of the app
@@ -42,6 +45,7 @@ app.layout = html.Div([
 
     dcc.Graph(id='breed-chart')
 ])
+
 
 # Callback to update table, map, and chart
 @app.callback(
@@ -82,6 +86,7 @@ def update_dashboard(animal_type):
 
     return table, map_layers, fig
 
+
 # Run the app
 if __name__ == '__main__':
-    app.run_server(debug=True, host='0.0.0.0', port=8050)
+    app.run(debug=True, port=8050)  # host defaults to 127.0.0.1
